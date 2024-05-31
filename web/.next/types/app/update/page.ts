@@ -1,4 +1,4 @@
-// File: /Users/leroysalih/Long-task-svr/web/app/update/page.tsx
+// File: /app/app/update/page.tsx
 import * as entry from '../../../../app/update/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
