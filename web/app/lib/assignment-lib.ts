@@ -4,9 +4,10 @@ import CheckClasses from "@/components/planning/check-classes";
 
 import {DateTime} from "luxon";
 
-import pg from "pg";
+
 import { ClassesPM,  DeptClassAssignmentCounts } from "@/types/planning";
 import { startOfWeekLocal } from "./date-lib";
+import pg from "pg";
 import { dbConnection }from "@/components/database/connection";
 
 /*
