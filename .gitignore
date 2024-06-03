@@ -1,6 +1,6 @@
 .env.default
 .env.local
 
-database/volume/
-web/node_modules
-worker/node_modules
+./database/volume/
+./web/node_modules
+./worker/node_modules
