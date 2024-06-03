@@ -8,6 +8,7 @@ import {Assignment, AssignmentDetails, Outcomes} from "@/types/planning";
 import {isDateInCurrentWeek, startOfWeekLocal, endOfWeekLocal, startOfNextWeekLocal, endOfNextWeekLocal} from "@/app/lib/date-lib";
 import { assignmentChecks, ClassPMChecks } from "@/app/lib/assignment-checks";
 import { handleUpdateAssignmentsByClassTag, handleUpdateOutcomesByAssignmentID, handleUpdateOutcomesByClassTag} from "../../update/handleUpdates";
+import Button from "@/components/button";
 
 const Page = async ({params} : {params: {class_display_name  :string}}) => {
     
@@ -15,7 +16,7 @@ const Page = async ({params} : {params: {class_display_name  :string}}) => {
     class_display_name = decodeURIComponent(class_display_name);
 
     const startOfWeekDt = startOfWeekLocal(DateTime.now())
-    const startDate = startOfWeekDt.minus({'weeks': 10});
+    const startDate = startOfWeekDt.minus({'weeks': 2});
     const endDate = startOfWeekDt.plus({'weeks':2});
 
     const {data, error} = await getAssigmentsBetween(startDate, endDate);
@@ -25,19 +26,24 @@ const Page = async ({params} : {params: {class_display_name  :string}}) => {
 
     return <>
         <PageTitle>Details for {class_display_name}</PageTitle>
+        <div className="flex flex-row m-3">
+
         <form action={handleUpdateAssignmentsByClassTag}>
             <input value={class_display_name} name="classTag" type="hidden"/>
-            <button>Refresh Assignments for {class_display_name}</button> 
+            <Button>Refresh Assignments for {class_display_name}</Button> 
         </form>
 
         <form action={handleUpdateOutcomesByClassTag}>
             <input value={class_display_name} name="classTag" type="hidden"/>
-            <button>Refresh Marking for {class_display_name}</button> 
+            <Button>Refresh Marking for {class_display_name}</Button> 
         </form>
+
+        </div>
+        
 
         <DisplayAlerts checks={assignmentsStatus}/>
         
-        <div>
+        <div >
             {
                 (!filteredData || 
                     filteredData[0] === undefined ||
@@ -156,10 +162,10 @@ const DisplayAlerts = ({checks}:{checks : false | ClassPMChecks | undefined}) =>
     }
 
     return <>
-    <div>
-        <div className={`${checks.includes("hasNoAssignmentsInNextWeek") ? 'bg-red-500' : 'bg-slate-100'} `}>Next week not planned</div>
-        <div className={`${checks.includes("hasNoAssignmentsInCurrentWeek") ? 'bg-red-500' : 'bg-slate-100'} `}>Current week not planned</div>
-        <div className={`${checks.includes("hasUnmarkedInPrevWeek") ? 'bg-red-500' : 'bg-slate-100' }`}>Last week not marked</div>
+    <div className="flex flex-row">
+        <div className={`m-1 p-2 rounded-md ${checks.includes("hasNoAssignmentsInNextWeek") ? 'bg-red-500' : 'bg-slate-100'} `}>Next week not planned</div>
+        <div className={`m-1 p-2 rounded-md ${checks.includes("hasNoAssignmentsInCurrentWeek") ? 'bg-red-500' : 'bg-slate-100'} `}>Current week not planned</div>
+        <div className={`m-1 p-2 rounded-md ${checks.includes("hasUnmarkedInPrevWeek") ? 'bg-red-500' : 'bg-slate-100' }`}>Last week not marked</div>
         
     </div>
     

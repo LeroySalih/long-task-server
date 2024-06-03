@@ -6,6 +6,7 @@ import SignOut from "./sign-out";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth-options"
 import Link from "next/link";
+import Button from "../components/button";
 
 export default async function Home() {
   //console.log("Client ID:", process.env.AZURE_AD_CLIENT_ID);
@@ -15,12 +16,12 @@ export default async function Home() {
 
   const session = await getServerSession(authOptions)
 
+  if (!session || !session.user) {
+    return <SignIn/>
+  }
   return (
     <>
-    <SignIn/>
-    <SignOut/>
-    <pre>{JSON.stringify(session, null, 2)}</pre>
-    <Link href="/profile">Profile</Link>
+    <h1>{session.user.name}<SignOut/></h1>
     </>
   );
 }

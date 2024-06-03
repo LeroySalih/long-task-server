@@ -10,6 +10,14 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 dotenv.config({ path: path.join(__dirname, '../.env.default') });
 dotenv.config({ path: path.join(__dirname, '../.env.local') });
 
-const nextConfig = {};
+const nextConfig = {
+    
+    experimental: {
+        serverActions: {
+          allowedOrigins:['web', '*.web', '*.web:3000', 'web:3000','salih-dashboard.com', '*.salih-dashboard.com'],
+          allowedForwardedHosts: ['web', '*.web', '*.web:3000', 'web:3000','salih-dashboard.com', '*.salih-dashboard.com'],
+        },
+      },
+};
 
 export default nextConfig;

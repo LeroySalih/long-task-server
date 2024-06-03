@@ -25,33 +25,12 @@ services:
       - "5432:5432"
     volumes:
       - ./database/volume:/var/lib/postgresql/data
+      - ./database/define_db.sql:/docker-entrypoint-initdb.d/define_db.sql
     env_file:
       - path: ./.env.default
         required: true
       - path: ./.env.local
         required: false
-
-  web:
-    build: 
-      context: ./web
-    container_name: lts-web
-      
-    ports:
-      - "3000:3000"
-    depends_on:
-      message:
-        condition : service_healthy
-
-    volumes:
-      - /Users/leroysalih/Long-task-svr-001/web:/app
-      
-    env_file:
-      - path: ./.env.default
-        required: true
-      - path: ./.env.local
-        required: false
-
-
   worker:
     build: 
       context: ./worker
@@ -62,7 +41,7 @@ services:
         condition : service_healthy
 
     volumes:
-      - /Users/leroysalih/Long-task-svr-001/worker:/app
+      - ./worker:/app
 
     env_file:
       - path: ./.env.default
@@ -70,20 +49,41 @@ services:
       - path: ./.env.local
         required: false
 
- # nginx:
- #   container_name: nginx
- #   restart: unless-stopped
- #   image: nginx
- #   ports: 
- #     - 80:80
- #     - 443:443
- #   volumes:
- #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
- #     - ./certbot/conf:/etc/letsencrypt
- #     - ./certbot/www:/var/www/certbot
- #   depends_on:
- #     web:
- #       condition : service_started
+  web:
+    #image: lts-web:local
+    build: 
+      context: ./web
+    container_name: lts-web
+      
+    ports:
+      - "3000:3000"
+    depends_on:
+      message:
+        condition : service_healthy
+
+    #volumes:
+    #  - ./web:/app
+      
+    env_file:
+      - path: ./.env.default
+        required: true
+      - path: ./.env.local
+        required: false
+
+  nginx:
+    container_name: nginx
+    restart: unless-stopped
+    image: nginx
+    ports: 
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+#    depends_on:
+#      web:
+#        condition : service_started
 
 
 #  certbot:

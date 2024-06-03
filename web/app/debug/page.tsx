@@ -33,7 +33,7 @@ const Page = async () => {
         <pre>{JSON.stringify(dbConnection, null, 2)}</pre>
         <pre>{result && JSON.stringify(result.rows, null, 2)}</pre>
         <div>
-            {keys.map((k, i) => (<div>{k}: {process.env[k]}</div>))}
+            {keys.map((k, i) => (<div key={i}>{k}: {process.env[k]}</div>))}
         </div>
     </>
 }

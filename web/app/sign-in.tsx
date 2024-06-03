@@ -1,11 +1,12 @@
 "use client"
 
 import { signIn } from "next-auth/react";
+import Button from "../components/button";
 
 const SignIn = () => {
-    return <button onClick={() => { signIn('azure-ad') }}>
+    return <Button onClick={() => { signIn('azure-ad') }}>
     Sign In
-    </button>
+    </Button>
 }
 
 export default SignIn;

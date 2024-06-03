@@ -3,6 +3,7 @@
 import PageTitle from "@/components/page-title"
 import {handleUpdateClasses, handleUpdateUsers, handleUpdateAssignments, handleUpdateOutcomes} from "./handleUpdates";
 import {getDeptClassAssignmentCounts} from "@/app/lib/assignment-lib";
+import Button from "@/components/button";
 
 
 const Page = async () => {
@@ -16,22 +17,25 @@ const Page = async () => {
     return <>
     <PageTitle>Update</PageTitle>
     
+    <div className="flex flex-row">
+        <form action={handleUpdateClasses}>
+            <Button type="submit">Update Classes</Button>
+        </form>
 
-    <form action={handleUpdateClasses}>
-        <button type="submit">Update Classes</button>
-    </form>
+        <form action={handleUpdateUsers}>
+            <Button type="submit">Update Users</Button>
+        </form>
 
-    <form action={handleUpdateUsers}>
-        <button type="submit">Update Users</button>
-    </form>
+        <form action={handleUpdateAssignments}>
+            <Button type="submit">Update Assignments</Button>
+        </form>
+        <form action={handleUpdateOutcomes}>
+            <Button type="submit">Update Marking</Button>
+        </form>
+    </div>
+    
 
-    <form action={handleUpdateAssignments}>
-        <button type="submit">Update Assignments</button>
-    </form>
-
-    <form action={handleUpdateOutcomes}>
-        <button type="submit">Update Marking</button>
-    </form>
+    
 
     <h1>Assignment Counts</h1>
     {

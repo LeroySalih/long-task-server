@@ -1,0 +1,103 @@
+services:
+
+  message:
+    image: "rabbitmq:3.13"
+  
+    ports:
+    - "5672:5672"
+  
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    env_file:
+      - path: ./.env.default
+        required: true
+      - path: ./.env.local
+        required: false
+
+  database:
+    image: "postgres:16"
+
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/volume:/var/lib/postgresql/data
+      - ./database/define_db.sql:/docker-entrypoint-initdb.d/define_db.sql
+    env_file:
+      - path: ./.env.default
+        required: true
+      - path: ./.env.local
+        required: false
+  worker:
+    build: 
+      context: ./worker
+    container_name: lts-worker
+
+    depends_on:
+      message:
+        condition : service_healthy
+
+    volumes:
+      - ./worker:/app
+
+    env_file:
+      - path: ./.env.default
+        required: true
+      - path: ./.env.local
+        required: false
+
+  web:
+    #image: lts-web:local
+    build: 
+      context: ./web
+    container_name: lts-web
+      
+    ports:
+      - "3000:3000"
+    depends_on:
+      message:
+        condition : service_healthy
+
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      
+    env_file:
+      - path: ./.env.default
+        required: true
+      - path: ./.env.local
+        required: false
+
+#  nginx:
+#    container_name: nginx
+#    restart: unless-stopped
+#    image: nginx
+#    ports: 
+#       - 80:80
+#      - 443:443
+#    volumes:
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#      - ./certbot/conf:/etc/letsencrypt
+#       - ./certbot/www:/var/www/certbot
+#    depends_on:
+#      web:
+#        condition : service_started
+
+
+#  certbot:
+#    image: certbot/certbot
+#    container_name: certbot 
+#    volumes:
+#      - ./certbot/conf:/etc/letsencrypt
+#      - ./certbot/www:/var/www/certbot
+#    command: certonly --webroot -w /var/www/certbot --force-renewal --email sleroy@bisak.org -d salih-dashboard.com --agree-tos
+
+
+
+  
+
+
+  

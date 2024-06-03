@@ -12,6 +12,7 @@ export async function GET() {
   headers.append('Content-Type', 'text/event-stream');
   headers.append('Cache-Control', 'no-cache');
   headers.append('Connection', 'keep-alive');
+  headers.append('X-Accel-Buffering', 'no');
 
   const body = new ReadableStream({
     async start(controller) {

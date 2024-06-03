@@ -1,5 +1,6 @@
 "use client"
 
+import Button from '@/components/button';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation'
 
@@ -15,10 +16,10 @@ const SignOut = () => {
     }
 
 
-    return <button onClick={handleLogout}>
+    return <Button onClick={handleLogout}>
 
     Sign Out
-    </button>
+    </Button>
 }
 
 export default SignOut;
