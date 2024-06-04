@@ -1,4 +1,4 @@
-// File: /Users/leroysalih/Long-task-svr-001/web/app/api/sse/route.js
+// File: /app/app/api/sse/route.js
 import * as entry from '../../../../../app/api/sse/route.js'
 import type { NextRequest } from 'next/server.js'
 
