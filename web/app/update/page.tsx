@@ -1,4 +1,4 @@
-
+export const dynamic = 'force-dynamic'
 
 import PageTitle from "@/components/page-title"
 import {handleUpdateClasses, handleUpdateUsers, handleUpdateAssignments, handleUpdateOutcomes} from "./handleUpdates";

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import PageTitle from "@/components/page-title";
 
 

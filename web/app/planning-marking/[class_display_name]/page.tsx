@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 
 import PageTitle from "@/components/page-title";
 import {DateTime} from "luxon";

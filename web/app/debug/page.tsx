@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { dbConnection }from "@/components/database/connection";
 import pg from "pg";
 
