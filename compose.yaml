@@ -50,10 +50,12 @@ services:
         required: false
 
   web:
-    #image: lts-web:local
+    #image: lts-web:latest
     build: 
       context: ./web
-    container_name: lts-web
+      
+      
+    container_name: lts-web:latest
       
     ports:
       - "3000:3000"

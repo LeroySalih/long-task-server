@@ -53,6 +53,8 @@ services:
     #image: lts-web:local
     build: 
       context: ./web
+      dockerfile: dockerfile.dev
+
     container_name: lts-web
       
     ports:

@@ -28,7 +28,7 @@ export default function RootLayout({
             bg-slate-700 text-white
             font-roboto-condensed
         ">
-            C&T Dept 😸
+            CaT Dept 😸
         </div>
         <div className="flex flex-col place-content-center w-100 grid-cols-1 gap-4 md:grid md:grid-cols-12">
         <div className="min-h-[100px] rounded-lg bg-slate-300 shadow  m-2 p-4

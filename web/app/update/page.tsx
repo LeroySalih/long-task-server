@@ -5,6 +5,7 @@ import {handleUpdateClasses, handleUpdateUsers, handleUpdateAssignments, handleU
 import {getDeptClassAssignmentCounts} from "@/app/lib/assignment-lib";
 import Button from "@/components/button";
 
+import {log} from '@/lib/logger';
 
 const Page = async () => {
 

@@ -10,16 +10,15 @@ export const doUpdateClasses = async (pool, token) => {
 
     const {data: deptClasses, error} = await getDeptClassesFromDb(pool);
 
-    await logMsg("Updating Classes");
+    await logMsg(pool, "info", "Updating Classes");
 
     const {data:myClasses, error: myClassesError} = await callFullApi("https://graph.microsoft.com/beta/education/me/classes", token);
     
     const classesStatus = myClasses && myClasses.length ? `Retrieved ${myClasses.length} classes from MS Graph` : 'No classes returned'
 
-    await logMsg(classesStatus);
 
     if (!myClasses || myClasses.length === 0){
-        await logMsg("No classes returned, exiting");
+        await logMsg(pool, "info", "No classes returned, exiting");
         return
     }
 
@@ -37,20 +36,20 @@ export const doUpdateClasses = async (pool, token) => {
     }
     
     console.log(colors.bg.green,('[doUpdateClasses] - Done'), colors.reset)
-    await logMsg("Updating Classes = done");
+    await logMsg(pool, "info", "Completed - updating classes");
 }
 
 export const doUpdateUsers = async (pool, token) => {
 
     const {data: deptClasses, error} = await getClassesFromDb(pool);
-    logMsg("Updating Users")
+    logMsg(pool, "info", "Updating Users")
 
     for (const c of deptClasses){
         console.log(token.substring(0, 10));
         const {data:users, error: usersErrors} = await callFullApi(`https://graph.microsoft.com/beta/education/classes/${c.id}/members`, token);
 
         //console.log(`Received ${users.length} users`)
-        logMsg(`Updating users for ${c.display_name}`);
+        logMsg(pool, "info",  `Updating users for ${c.display_name}`);
 
         for (const u of users) {
 
@@ -66,13 +65,13 @@ export const doUpdateUsers = async (pool, token) => {
 
     }
     
-    logMsg("Updating Users - done.")
+    logMsg(pool, "info", "Updating Users - done.")
     console.log(colors.bg.green,('[doUpdateUsers] - Done'), colors.reset)
 }
 
 export const doUpdateAssignmentsByClassTag = async (pool, classTag, token) => {
 
-    logMsg(`Updating Assigments for ${classTag}`);
+    logMsg(pool, "info", `Updating Assigments for ${classTag}`);
 
     const {data: classes, error} = await getClassesByTagFromDb(pool, classTag, token);
     
@@ -142,7 +141,7 @@ export const doUpdateAssignmentsByClassTag = async (pool, classTag, token) => {
         
     }
     
-    logMsg(`Updating Assigments for ${classTag} - done`);
+    logMsg(pool, "info", `Updating Assigments for ${classTag} - done`);
     console.log(colors.bg.green,`[doUpdateAssignmentsByClassTag] ${classTag} - Done`, colors.reset);
     // console.log(myClasses);
 }
@@ -151,7 +150,7 @@ export const doUpdateAssignmentsByClassTag = async (pool, classTag, token) => {
 
 export const doUpdateAssignments = async (pool, token) => {
 
-    logMsg(`Updating All Assigments`);
+    logMsg(pool, "info", `Updating All Assigments`);
 
     const {data: classes, error} = await getClassesFromDb(pool);
     
@@ -159,7 +158,7 @@ export const doUpdateAssignments = async (pool, token) => {
 
     for (const c of classes){
 
-        logMsg(`Updating assigments for ${c.display_name}`);
+        logMsg(pool, "info", `Updating assigments for ${c.display_name}`);
         console.log(`[doUpdateAssignments] - Processing ${c.display_name}`);
 
         const {data:graphAssignments, error} = await callFullApi(`https://graph.microsoft.com/beta/education/classes/${c.id}/assignments`, token);
@@ -217,7 +216,7 @@ export const doUpdateAssignments = async (pool, token) => {
         
     }
     
-    logMsg(`Updating All Assigments - Done`);
+    logMsg(pool, "info", `Updating All Assigments - Done`);
     console.log(colors.bg.green,'[doUpdateAssignments] - Done', colors.reset);
     // console.log(myClasses);
 }
@@ -225,7 +224,7 @@ export const doUpdateAssignments = async (pool, token) => {
 export const doUpdateOutcomes = async (pool, token) => {
  
     // const {data: classes, error} = await getAssignments(pool);
-    logMsg(`Updating marking for all assignments`);
+    logMsg(pool, "info", `Updating marking for all assignments`);
 
     const startOfWeek = DateTime.now().startOf('week').minus({days: 1})
     const updatePeriod = startOfWeek.minus({'weeks': 4});
@@ -268,7 +267,7 @@ export const doUpdateOutcomes = async (pool, token) => {
                 // console.log(colors.bg.blue, values, colors.reset);
 
                 await client.query(q, values);
-                logMsg(`Marking updated for ${outcome.assignment_id}`);
+                logMsg(pool, "info", `Marking updated for ${outcome.assignment_id}`);
                 console.log( colors.bg.green, (`Outcome written to ${outcome.assignment_id}`), colors.reset);
             } catch(err) {
                 console.error(err.message);
@@ -279,76 +278,13 @@ export const doUpdateOutcomes = async (pool, token) => {
             
         }
     }
-    logMsg(`Updating marking for all assignments - done`);
+    logMsg(pool, "info", `Updating marking for all assignments - done`);
     console.log(colors.bg.green,'[doUpdateOutcomes] - Done', colors.reset);
 }
-
-
-/*
-export const doUpdateOutcomesForAssignment = async (pool, assignment_id, token) => {
- 
-    // const {data: classes, error} = await getAssignments(pool);
-    
-    const startOfWeek = DateTime.now().startOf('week').minus({days: 1})
-    const updatePeriod = startOfWeek.minus({'weeks': 4});
-
-    console.info("Updating Outcomes since", updatePeriod.toISO());
-
-    const {data: assignments, error} = await getAssignmentsByDueDateFromDb(pool, updatePeriod);
-
-    console.info(`Received ${assignments.length} assignments`, assignments[0]);
-
-    for (const assignment of assignments) {
-
-        // get the submissions for this assignment
-        const {data: submissions, error} = await getSubmissionsForAssignmentFromGraph(assignment, token);
-
-        console.log(colors.bg.red,`Received ${submissions.length} submissions for assignment ${assignment.id}`, colors.reset);
-        
-        for (const submission of submissions) {
-//            console.log(submission.id)
-            console.log(colors.bg.blue, "submission", submission, colors.reset);
-            const {data: outcome, error} = await getOutcomeForSubmissionFromGraph(submission, token)
-            
-
-            let client = await pool.connect();
-            try {
-
-                const q = `INSERT INTO outcomes (class_id, assignment_id, submission_id, user_id, points)
-                values ($1, $2, $3, $4, $5)
-                ON CONFLICT (class_id, assignment_id, submission_id, user_id) DO UPDATE SET
-                points = $5;
-            `;
-                const values = [
-                    outcome.class_id, 
-                    outcome.assignment_id, 
-                    outcome.submission_id, 
-                    outcome.user_id,
-                    outcome.points
-                ];
-
-                // console.log(colors.bg.blue, values, colors.reset);
-
-                await client.query(q, values);
-                console.log( colors.bg.green, (`Outcome written to ${outcome.assignment_id}`), colors.reset);
-            } catch(err) {
-                console.error(err.message);
-
-            } finally{
-                client.release();
-            }
-            
-        }
-    }
-    console.log(colors.bg.green,'[doUpdateOutcomes] - Done', colors.reset);
-}
-*/
 
 
 export const doUpdateOutcomesByAssignmentId = async (pool, assignment_id, token) => {
- 
-    // const {data: classes, error} = await getAssignments(pool);
-    
+     
     const startOfWeek = DateTime.now().startOf('week').minus({days: 1})
     const updatePeriod = startOfWeek.minus({'weeks': 4});
 

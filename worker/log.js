@@ -2,7 +2,7 @@ import amqp from "amqplib";
 import chalk from "chalk";
 import {colors} from "./console-colours.js";
 
-export const logMsg = async (msg) => {
+export const logMsg = async (pool, type, msg) => {
 
     let data, error
 
@@ -11,21 +11,9 @@ export const logMsg = async (msg) => {
 
     try {
          
-        const connection =await amqp.connect('amqp://user:password@message');
-        console.log(colors.bg.blue, "logMsg connected", colors.reset, msg);
-        
-        const channel = await connection.createChannel();
-        console.log(colors.bg.blue, "channel connected", colors.reset, msg);
+        const q = `insert into logs (app, status, msg) values ($1, $2, $3)`;
 
-        var queue = 'log-queue';
-
-        await channel.assertQueue(queue, {
-            durable: true
-        });
-
-        const msgText = JSON.stringify(msg)
-        channel.sendToQueue(queue, Buffer.from(msgText));
-        console.log(colors.bg.blue, "message sent", colors.reset, msgText);
+        const result = await pool.query(q, ["worker", type, msg]);
 
     } catch (err) {
         console.error(colors.bg.red, '[logMsg::Error]', colors.bg.reset, err.message)
