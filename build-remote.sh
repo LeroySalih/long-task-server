@@ -22,7 +22,7 @@ docker rmi -f $(docker images -aq)
 
 echo
 echo "Fetching Source Code at" `date`
-git fetch
+git pull
 
 echo
 echo "Building Web Server - Debug Mode" 
