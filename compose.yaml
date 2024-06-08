@@ -55,7 +55,7 @@ services:
       context: ./web
       
       
-    container_name: lts-web:latest
+    container_name: lts-web
       
     ports:
       - "3000:3000"
