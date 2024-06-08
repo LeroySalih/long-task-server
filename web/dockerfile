@@ -2,8 +2,8 @@ FROM  node:20
 
 WORKDIR /app
 
-COPY ./web/package.json .
-COPY ./web .
+COPY ./package.json .
+COPY ./ .
 
 RUN npm install 
 RUN npm run build
