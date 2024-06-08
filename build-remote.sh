@@ -34,5 +34,5 @@ cd ..
 echo
 echo "Building docker image for lts-web:latest"
 
-docker build . -t lts-web:latest -f web/dockerfile
+#docker build . -t lts-web:latest -f web/dockerfile
 docker compose up
