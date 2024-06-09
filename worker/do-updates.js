@@ -299,7 +299,7 @@ export const doUpdateOutcomesByAssignmentId = async (pool, assignment_id, token)
         // get the submissions for this assignment
         const {data: submissions, error} = await getSubmissionsForAssignmentFromGraph(assignment, token);
 
-        console.log(colors.bg.red,`Received ${submissions.length} submissions for assignment ${assignment.id}`, colors.reset);
+        console.log(colors.bg.red,`Received ${submissions && submissions.length} submissions for assignment ${assignment.id}`, colors.reset);
         
         for (const submission of submissions) {
 //            console.log(submission.id)
