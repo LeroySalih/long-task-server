@@ -14,5 +14,5 @@ git commit -m "Build at ${current_date_time}"
 git push origin
 
 #copy the .env files
-scp .env.* root@139.59.70.63:/home/long-task-server/
+scp .env.default root@139.59.70.63:/home/long-task-server/
 

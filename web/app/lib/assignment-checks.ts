@@ -47,7 +47,7 @@ export const assignmentChecks = (classPM: ClassPM) : ClassPMChecks =>  {
 
     const nextWeekCount = (assignments.filter(a => checkNextWeek(a.assignment.due_date_time)) || []).length || 0;
     if (nextWeekCount === 0) {
-        checks.push("hasNoAssignmentsInNextWeek");
+    //    checks.push("hasNoAssignmentsInNextWeek");
     //    console.log("Next Week assignments", assignments.filter(a => checkNextWeek(a.assignment.due_date_time)))
     }
 
