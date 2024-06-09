@@ -30,28 +30,28 @@
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
       "static/chunks/582-726f18a022f70835.js",
       "static/chunks/main-app-b8b9ab623158c3e0.js",
-      "static/chunks/app/profile/page-d3cf6960609c167c.js"
+      "static/chunks/app/profile/page-9dc8b3d94764abe5.js"
     ],
     "/debug/page": [
       "static/chunks/webpack-04c090bf27c652c8.js",
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
       "static/chunks/582-726f18a022f70835.js",
       "static/chunks/main-app-b8b9ab623158c3e0.js",
-      "static/chunks/app/debug/page-15c5169ff9537006.js"
+      "static/chunks/app/debug/page-552351f890550b9e.js"
     ],
     "/update/page": [
       "static/chunks/webpack-04c090bf27c652c8.js",
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
       "static/chunks/582-726f18a022f70835.js",
       "static/chunks/main-app-b8b9ab623158c3e0.js",
-      "static/chunks/app/update/page-d3f674a40a100146.js"
+      "static/chunks/app/update/page-eb69cfb98642dad7.js"
     ],
-    "/planning-marking/page": [
+    "/planning-marking/[class_display_name]/page": [
       "static/chunks/webpack-04c090bf27c652c8.js",
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
       "static/chunks/582-726f18a022f70835.js",
       "static/chunks/main-app-b8b9ab623158c3e0.js",
-      "static/chunks/app/planning-marking/page-a6f7b6e380ad366d.js"
+      "static/chunks/app/planning-marking/[class_display_name]/page-1012afd7bc3b505e.js"
     ],
     "/planning-marking/layout": [
       "static/chunks/webpack-04c090bf27c652c8.js",
@@ -61,12 +61,12 @@
       "static/chunks/231-79af95f00a2a104b.js",
       "static/chunks/app/planning-marking/layout-34ba115bb8a00357.js"
     ],
-    "/planning-marking/[class_display_name]/page": [
+    "/planning-marking/page": [
       "static/chunks/webpack-04c090bf27c652c8.js",
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
       "static/chunks/582-726f18a022f70835.js",
       "static/chunks/main-app-b8b9ab623158c3e0.js",
-      "static/chunks/app/planning-marking/[class_display_name]/page-1012afd7bc3b505e.js"
+      "static/chunks/app/planning-marking/page-a6f7b6e380ad366d.js"
     ]
   }
 }
