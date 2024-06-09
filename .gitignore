@@ -4,3 +4,5 @@
 ./database/volume/
 ./web/node_modules
 ./worker/node_modules
+
+./build-local.sh
