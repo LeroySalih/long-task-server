@@ -1,6 +1,7 @@
 {
   "/page": "app/page.js",
   "/update/page": "app/update/page.js",
-  "/planning-marking/[class_display_name]/page": "app/planning-marking/[class_display_name]/page.js",
-  "/planning-marking/page": "app/planning-marking/page.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/planning-marking/page": "app/planning-marking/page.js",
+  "/planning-marking/[class_display_name]/page": "app/planning-marking/[class_display_name]/page.js"
 }
